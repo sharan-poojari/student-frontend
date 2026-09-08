@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import Student from './Student'
 import './App.css'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"
+
 function App() {
   const [count, setCount] = useState(0)
   const [name, setName] = useState("")
@@ -31,7 +33,7 @@ function App() {
     setError("")
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("http://localhost:3000/api/students",
+      const response = await fetch(`${API_BASE_URL}/api/students`,
         {
           method: "GET",
           headers: {
@@ -87,7 +89,7 @@ function App() {
       const token = localStorage.getItem("token")
       let response
       if (editId === "") {
-        response = await fetch("http://localhost:3000/api/students",
+        response = await fetch(`${API_BASE_URL}/api/students`,
           {
             method: "POST",
             headers: {
@@ -106,7 +108,7 @@ function App() {
           return
         }
       } else {
-        response = await fetch(`http://localhost:3000/api/students/${editId}`,
+        response = await fetch(`${API_BASE_URL}/api/students/${editId}`,
           {
             method: "PUT",
             headers: {
@@ -160,7 +162,7 @@ function App() {
       }
 
       const response = await fetch(
-        "http://localhost:3000/api/auth/signup",
+        `${API_BASE_URL}/api/auth/signup`,
         {
           method: "POST",
           headers: {
@@ -201,7 +203,7 @@ function App() {
     try {
       setError("")
       setLoginLoading(true)
-      const response = await fetch("http://localhost:3000/api/auth/login",
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -230,7 +232,7 @@ function App() {
   const getCurrentUser = async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("http://localhost:3000/api/auth/me",
+      const response = await fetch(`${API_BASE_URL}/api/auth/me`,
         {
           method: "GET",
           headers: { "Authorization": "Bearer " + token }
@@ -257,7 +259,7 @@ function App() {
       setUsersLoading(true)
       setError("")
       const token = localStorage.getItem("token")
-      const response = await fetch("http://localhost:3000/api/auth/users", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -373,7 +375,7 @@ function App() {
                       try {
                         setDeletingId(student._id)
                         const token = localStorage.getItem("token")
-                        const response = await fetch(`http://localhost:3000/api/students/${student._id}`, {
+                        const response = await fetch(`${API_BASE_URL}/api/students/${student._id}`, {
                           method: "DELETE",
                           headers: {
                             "Authorization": "Bearer " + token
@@ -427,7 +429,7 @@ function App() {
                         setUpdatingUserId(account._id)
                         const _id = account._id
                         const token = localStorage.getItem("token")
-                        const response = await fetch(`http://localhost:3000/api/auth/users/${_id}/role`,
+                        const response = await fetch(`${API_BASE_URL}/api/auth/users/${_id}/role`,
                           {
                             method: "PUT",
                             headers: {
